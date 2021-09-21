@@ -35,11 +35,12 @@ export default function GetTodos () {
 
     return (
       <div>
+        
         {data.map(todo => {
           return (
             <div key={todo.id} className={styles.todo}>
               {todo.title}
-              <div>x</div>
+              <button id="toggle-all" className="toggle-all">Done</button>
             </div>
           )
         })}
