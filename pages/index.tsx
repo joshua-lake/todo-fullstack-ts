@@ -1,31 +1,19 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { atom } from 'recoil'
 import styles from './index.module.scss'
+import AddTodo from './AddTodo'
+import LiveTodo from './LiveTodo'
+import GetTodos from './GetTodos'
 
 export default function Home() {
-  const [data, setData] = useState<{id: number, createdAt: string, updatedAt: string, title: string}[]>([])
 
-  useEffect(() => {
-    // fetch('/api/todos/all', {method: 'POST', body: JSON.stringify({name: 'josh'}), headers: {'content-type': 'application/json'}})
-    fetch('/api/todos/all')
-      .then((res) => {
-        return res.json()
-      })
-      .then((todos) => {
-        setData(todos)
-      })
-  }, [])
-  console.log(styles)
+  // console.log(styles)
   return (
-    <div className={styles.title}>
-      {data.map(todo => {
-        return (
-          <div key={todo.id}>
-            {todo.title}
-          </div>
-        )
-      })}
+    <div className={styles.body}>
+      <AddTodo/>
+      <div className={styles.list}>
+        <GetTodos/>
+      </div>
+      <LiveTodo/>
     </div>
   )
 }
