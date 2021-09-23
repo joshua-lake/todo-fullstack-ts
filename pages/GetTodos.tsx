@@ -15,6 +15,8 @@ const todoUpdate = selector({
 
 export default function GetTodos () {
 
+  const [toggle, setToggle] = useRecoilState<boolean>(updateList)
+
   const [data, setData] = useRecoilState(todoList)
 
     // const [data, setData] = useState<{id: number,  title: string}[]>([])
@@ -31,16 +33,22 @@ export default function GetTodos () {
         })
     }, [update])
 
+    function handleDelete (id: string) {
+      fetch('/api/todos/delete', {method: 'POST', body: JSON.stringify({id: `${id}`}), headers: {'content-type': 'application/json'}})
+      .then(() => {
+        return setToggle(!toggle)
+      })
+    }
+
 
 
     return (
       <div>
-        
         {data.map(todo => {
           return (
             <div key={todo.id} className={styles.todo}>
               {todo.title}
-              <button id="toggle-all" className="toggle-all">Done</button>
+              <button onClick={() => handleDelete(todo.id)}>Done</button>
             </div>
           )
         })}
